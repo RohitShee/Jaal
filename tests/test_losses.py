@@ -3,7 +3,7 @@ import numpy as np
 from jaal.activations import ReLU
 from jaal.containers import Sequential
 from jaal.layers import Linear
-from jaal.losses import MSELoss
+from jaal.losses import MSELoss,BCELoss
 
 
 def test_mse_by_hand():
@@ -51,8 +51,20 @@ def test_network_gradients_with_mse():
             p.data[i] = old
             numeric[i] = (plus - minus) / (2 * eps)
         assert np.allclose(p.grad, numeric, atol=1e-5)
+def test_bce_by_hand():
+    loss_fn = BCELoss()
+    pred   = np.array([[0.9, 0.2]])
+    target = np.array([[1.0, 0.0]])
+    assert np.isclose(loss_fn(pred, target), 0.16425, atol=1e-4)
+    assert np.allclose(loss_fn.backward(), [[-0.5556, 0.6250]], atol=1e-4)
+
+def test_bce_confidently_wrong():
+    loss = BCELoss()(np.array([[0.0, 1.0]]), np.array([[1.0, 0.0]]))
+    assert np.isfinite(loss) and loss > 10
 
 
 test_mse_by_hand()
 test_mse_batch_and_outputs()
 test_network_gradients_with_mse()
+test_bce_by_hand()
+test_bce_confidently_wrong()
