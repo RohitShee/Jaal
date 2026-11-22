@@ -28,3 +28,26 @@ class Linear(Module):
 
     def parameters(self):
         return [self.W, self.b]
+
+class Dropout(Module):
+    def __init__(self, p=0.5, seed=None):
+        super().__init__()
+        self.rng = np.random.default_rng(seed)
+        assert 0 <= p < 1
+        self.p = p
+        self.mask = None
+
+    def forward(self, x):
+        x = np.asarray(x)
+        if self.training :
+            self.mask = (self.rng.random(x.shape) > self.p) /(1-self.p)
+            x = x * self.mask
+        else :
+            self.mask = np.ones(x.shape)
+        return x
+
+
+
+    def backward(self, grad_output):
+        return grad_output * self.mask
+
