@@ -6,7 +6,7 @@ from .module import Module, Parameter
 
 
 class Linear(Module):
-    def __init__(self, in_features, out_features, seed=42):
+    def __init__(self, in_features, out_features, seed=None):
         super().__init__()
         rng = np.random.default_rng(seed)
         self.W = Parameter(

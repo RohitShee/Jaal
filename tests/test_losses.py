@@ -63,8 +63,3 @@ def test_bce_confidently_wrong():
     assert np.isfinite(loss) and loss > 10
 
 
-test_mse_by_hand()
-test_mse_batch_and_outputs()
-test_network_gradients_with_mse()
-test_bce_by_hand()
-test_bce_confidently_wrong()

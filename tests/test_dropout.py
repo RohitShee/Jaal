@@ -48,7 +48,4 @@ def test_mode_propagates_to_dropout():
     model.train()
     assert not np.array_equal(model(x), model(x))   # random in train
 
-test_dropout_forward()
-test_dropout_p_is_respected()
-test_dropout_backward()
-test_mode_propagates_to_dropout()
+

@@ -10,3 +10,14 @@ print(out)
 print(layer.W.grad)
 print(layer.b.grad)
 print(dx)
+
+def test_linear_layers_differ_by_default():
+    a, b = Linear(4, 4), Linear(4, 4)
+    assert not np.array_equal(a.W.data, b.W.data)
+
+def test_linear_seed_is_reproducible():
+    a, b = Linear(4, 4, seed=0), Linear(4, 4, seed=0)
+    assert np.array_equal(a.W.data, b.W.data)
+
+test_linear_layers_differ_by_default()
+test_linear_seed_is_reproducible()

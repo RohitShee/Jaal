@@ -33,7 +33,3 @@ def test_inputs_not_modified():
         pass
     assert np.array_equal(x, before)
 
-test_covers_all_samples()
-test_shuffle_changes_between_epochs()
-test_no_shuffle_is_repeatable()
-test_inputs_not_modified()

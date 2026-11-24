@@ -39,10 +39,5 @@ def test_batchnorm_eval_does_not_update():
     layer(x)
     assert np.array_equal(layer.running_mean, before)
 
-model = Sequential(Linear(2, 8), BatchNorm(8), ReLU(), Linear(8, 1))
-model.eval()
-assert model.layers[1].training is False
 
-test_batchnorm_running_stats_update_in_train()
-test_batchnorm_eval_uses_running_stats()
-test_batchnorm_eval_does_not_update()
+

@@ -11,15 +11,15 @@ class Dummy(Module):
     def parameters(self):
         return [self.p]
 
+def test_parameter_and_zero_grad():
+    m = Dummy()
+    assert m.p.data.dtype == float
+    assert m.p.grad.shape == (2, 3) and m.p.grad.dtype == float
 
-m = Dummy()
-assert m.p.data.dtype == float
-assert m.p.grad.shape == (2, 3) and m.p.grad.dtype == float
+    m.p.grad += 5
+    m.zero_grad()
+    assert m.p.grad.shape == (2, 3)
+    assert m.p.grad.sum() == 0
 
-m.p.grad += 5
-m.zero_grad()
-assert m.p.grad.shape == (2, 3)
-assert m.p.grad.sum() == 0
-
-m.eval()
-assert m.training is False
+    m.eval()
+    assert m.training is False
